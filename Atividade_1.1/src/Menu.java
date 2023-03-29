@@ -138,6 +138,7 @@ public class Menu {
 			}
 
 	public void menuUsuario() {
+		Random gerador = new Random();
 		String pessoa;
 		pessoa = showInputDialog("Digite seu cpf para consulta do bilhete (digite APENAS os 11 dígitos");
 		if (Usuarios.pesquisar(new Usuario(pessoa)) == null) {
@@ -145,8 +146,9 @@ public class Menu {
 					ERROR_MESSAGE);
 		} else {
 			Usuario pesquisarUsuario = new Usuario(pessoa);
-			Bilhete_Unico pesquisarBilhete = new Bilhete_Unico(pesquisarUsuario);
-			Bilhete_Unico bilheteLogin = new Bilhete_Unico(Bilhetes.pesquisar(pesquisarBilhete).dado);
+			System.out.println(pessoa);
+			Bilhete_Unico pesquisarBilhete = new Bilhete_Unico(Usuarios.pesquisar(pesquisarUsuario).dado);
+			System.out.println(pesquisarBilhete);
 			int menu;
 			do {
 
@@ -155,16 +157,16 @@ public class Menu {
 				switch (menu) {
 
 				case 1:
-					showConfirmDialog(null, "Saldo disponível \nR$: " + bilheteLogin.getSaldo(), "Consultar Saldo", DEFAULT_OPTION);
+					showConfirmDialog(null, "Saldo disponível \nR$: " + pesquisarBilhete.getSaldo(), "Consultar Saldo", DEFAULT_OPTION);
 					;
 					break;
 
 				case 2:
-					bilheteLogin.carregar(parseInt(showInputDialog(null, "Digite o Valor para recarga")));
+					pesquisarBilhete.carregar(parseDouble(showInputDialog(null, "Digite o Valor para recarga")));
 					break;
 
 				case 3:
-					if(bilheteLogin.passarNaCatraca() == true) {
+					if(pesquisarBilhete.passarNaCatraca() == true) {
 						showConfirmDialog(null, "Bem vindo", "Catráca", DEFAULT_OPTION,INFORMATION_MESSAGE);
 					}else {
 						showConfirmDialog(null, "Saldo Insuficiente", "Catráca", DEFAULT_OPTION,INFORMATION_MESSAGE);
@@ -172,6 +174,8 @@ public class Menu {
 					break;
 
 				case 4:
+					Bilhetes.remover(pesquisarBilhete);
+					Bilhetes.inserirFim(pesquisarBilhete);
 					return;
 
 				}

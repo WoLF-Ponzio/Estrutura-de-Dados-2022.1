@@ -20,9 +20,10 @@ public class Bilhete_Unico {
 	Bilhete_Unico(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	
+
+
 	Bilhete_Unico(Bilhete_Unico dado){
-		
+	
 	}
 
 	@Override
@@ -69,16 +70,11 @@ public class Bilhete_Unico {
 	}
 
 	public boolean passarNaCatraca() {
-		if (saldo < valorDaTarifa) {
+		if (this.getSaldo() < this.getValorDaTarifa()) { 
 			return false;
-		} else {
-			if (getUsuario().getTipoDeTarifa() == 1 || getUsuario().getTipoDeTarifa() == 2) {
-				saldo -= valorDaTarifa / 2;
+		}else {
+				saldo -= getValorDaTarifa();
 				return true;
-			} else {
-				saldo -= valorDaTarifa;
-				return true;
-			}
 		}
 	}
 
